@@ -1,0 +1,33 @@
+# .sxhkd/README
+
+# sets up shorcuts for general desktop use and bspwm 
+
+# usage of numbers is avoided for ease of use on a 40% keyboard
+# lowkey:            meta
+# Camelcase: shift + meta
+# ALLCAPS:   ctrl  + meta
+# 2Caps:     ctrl  +        shift
+# 3CAps:     ctrl  + meta + shift
+# Meta is super on desktop, and alt on laptop (xmodmapped to super, while lalt is also ralt)
+
+# ALERT: MULTIMONITOR SETUP NO CONFIGURED
+
+# +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+# |lastapp|desktp1|desktp2|desktp3|desktp4|desktp5|       |       |       |       |       |       |
+# |LastD  |SendD1 |SendD2 |SendD3 |SendD4 |SendD5 |       |       |       |       |       |       |
+# |       |S&F-D1 |S&F-D2 |S&F-D3 |S&F-D4 |S&F-D5 |       |PRSEL.2|PRSEL.4|PRSEL.6|PRSEL.8|       |
+# +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+# |       |pseudo | float | tiled |fullscr| close |       |focus-W|focus-S|focus-N|focus-E|tl-term|
+# |       |       |       |       |MonoclT| Kill  |       |Move--W|Move--S|Move--N|Move--E|fl-term|
+# |       |       |       |       |       |       |       |PRSEL-W|PRESE-S|PRESE-N|PRESE-E|       |
+# |       |       |       |       |   -   |       |       |   -   |       |       |       |       |
+# |       |       |       |       |       |       |       |SMallrW|SMallrS|SMallrN|SMallrR|       |
+# |       |       |       |       |       |       |       |LARgerW|LARgerS|LARgerN|LARgerR|       |
+# +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+# |       |       |       |       |re-conf|       |       | prevD |       |       | nextD |       |
+# |       |       |       |       |       |CloseWM|       |MoveFWW|MoveFWS|MoveFWN|MoveFWE|       |
+# +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+# |       |       |       |       |       |launcher(dmenu)|       |       |       |       |       |
+# |       |       |       |       |       |               |       |       |       |       |       |
+# |       |       |       |       |       | CLEAR-PRESEL  |       |       |       |       |       |
+# +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+

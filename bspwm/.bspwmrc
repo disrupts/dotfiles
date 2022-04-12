@@ -1,0 +1,79 @@
+#! /bin/sh
+
+# detect monitor mode 
+# AUTORANDRMODE=`autorandr | grep 'current' | awk '{print $1}'`
+
+# set refresh rate to 144Hz
+# 1000/144 = 7
+# bspc config pointer_motion_interval 7
+
+case $MACHINE in
+"Desktop")
+    bspc monitor DP-0 -d I II III 
+    bspc monitor HDMI-0 -d IV V
+    ;;
+"Laptop")
+    bspc monitor -d I II III IV V
+    ;;
+"*")
+    echo "Configure \$MACHINE to either Desktop or Laptop."
+    ;;
+esac
+
+bspc config top_padding           0 # polybar asks for space
+
+case $MACHINE in
+"Desktop")
+    bspc config border_width          3
+    bspc config window_gap            6
+    ;;
+"Laptop")
+    bspc config border_width          5
+    bspc config window_gap            8
+    ;;
+"*")
+    echo "Configure \$MACHINE to either Desktop or Laptop."
+    ;;
+esac
+
+bspc config split_ratio         0.52
+bspc config borderless_monocle  true
+bspc config gapless_monocle     true
+#bspc config paddignless_monocle true
+#TO DELETE #bspc config focus_by_distance   true
+
+#bspc config history_aware_focus true  # recent
+bspc config focus_follows_pointer true # older
+
+bspc config normal_border_color         '#1d1f21'
+bspc config active_border_color         '#cccccc'
+bspc config focused_border_color        '#c5c8c6'
+bspc config presel_feedback_color       '#aaaaaa'
+
+# other colours
+# '#b5bd68'
+# '#8abeb7'
+# '#f0c674'
+# '#cc6666'
+
+
+# mouse
+bspc config pointer_action1 move
+bspc config pointer_action2 resize_side
+bspc config pointer_action3 resize_corner
+bspc config pointer_modifier mod4 # mod1:alt mod4:super
+
+# application specific rules
+bspc rule -a kitty:float state=floating
+bspc rule -a mpv state=floating
+bspc rule -a feh  state=floating
+# bspc rule -a Gimp desktop='^8' state=floating follow=on
+# bspc rule -a lutris state=floating
+# bspc rule -a SDL_App state=floating # apps in develepment
+
+# solve issues with java apps
+export _JAVA_AWT_WM_NONREPARENTING=1
+wmname compiz
+
+# delete variables
+# unset AUTORANDRMODE

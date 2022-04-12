@@ -1,0 +1,135 @@
+[colours]
+background     = #00252525
+background-alt = #33252525
+foreground     = #ffffffff
+foreground-alt = #ff000000
+primary        = #331E1E1E
+secondary      = #ffffffff
+alert          = #ff711a26
+border         = #ffcccccc
+
+[global/wm]
+margin-top = 5
+
+[settings]
+screenchange-reload = true
+
+[bar-base]
+wm-restack = bspwm
+width = 100%
+height = 25
+radius = 10
+offset-y = 5
+fixed-center = true
+;bottom = false
+border-size = 0
+padding = 0
+;module-margin = 1
+tray-position = none
+
+; line-size = 2
+; line-color = ${colours.border}
+
+; colours
+border-color = ${colours.border}
+background = ${colours.background}
+foreground = ${colours.foreground}
+
+
+[bar-landscape-desktop]
+inherit = bar-base
+monitor = DP-0
+font-0 = "Roboto:style=bold:size=13;2"
+font-1 = "Inconsolata\-lig:size=13;2"
+font-2 = "RobotoMono:size=12;2"
+font-3 = "Symbola:size=12;2"
+
+[bar-landscape-laptop]
+inherit = bar-base
+monitor = eDP-1
+font-0 = "Roboto:style=bold:size=20;2"
+font-1 = "Inconsolata\-lig:size=20;2"
+font-2 = "RobotoMono:size=20;2"
+font-3 = "Symbola:size=20;2"
+offset-y = 12
+height = 27
+radius = 12
+
+[bar/landscape-time-desktop]
+inherit = bar-landscape-desktop
+modules-center = time
+offset-x = 915 ; screen_width/2 - bar_width/2
+width = 90
+
+[bar/landscape-time-laptop]
+inherit = bar-landscape-laptop
+modules-center = time
+offset-x = 1224 ; screen_width/2 - bar_width/2
+width = 112
+
+[bar/landscape-xwindow-desktop]
+inherit = bar-landscape-desktop
+override-redirect=true
+modules-left = xwindow
+width = 300
+offset-x = 6
+
+[bar/landscape-xwindow-laptop]
+inherit = bar-landscape-laptop
+override-redirect=true
+modules-left = xwindow
+width = 400
+offset-x = 6
+
+[bar/landscape-date-desktop]
+; override needed to keep it from spilling on right monitor
+; bar/landscape-time does it
+override-redirect=true
+inherit = bar-landscape-desktop
+modules-center = date space pulse
+width = 190 ; 140
+offset-x = 1724 ;1774 ; screen_width - bar_width - 6 [border+margin]
+
+[bar/landscape-date-laptop]
+; override needed to keep it from spilling on right monitor
+; bar/landscape-time does it
+override-redirect=true
+inherit = bar-landscape-laptop
+modules-center = date space pulse
+width = 254
+offset-x = 2298 ; screen_width - bar_width - 6 [border+margin]
+
+
+[module/space]
+type = custom/text
+content = " | "
+content-background = ${colours.background}
+
+[module/date]
+type = internal/date
+date = %A %d %b 
+label = %date%
+interval = 1
+
+[module/time]
+type = internal/date
+time = %H:%M
+label = %time%
+interval = 1
+
+[module/pulse]
+type = internal/pulseaudio
+;use-ui-max = true
+interval = 5
+format-volume = <ramp-volume>
+label-muted = "🔇 "
+ramp-volume-0 = 🔈
+ramp-volume-1 = 🔉
+ramp-volume-2 = 🔊
+
+[module/xwindow]
+type = internal/xwindow
+format = <label>
+format-padding = 2
+label = %title%
+label-maxlen = 50

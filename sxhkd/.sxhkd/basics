@@ -1,0 +1,49 @@
+#
+# wm independent hotkeys
+#
+
+# terminal emulator
+super + Return
+    kitty -c $HOME/.config/kitty/$MACHINE.conf
+    # urxvtc
+
+# floating terminal emulator
+# requires the following bspc rule
+# bspc rule -a kitty:float state=floating
+super + shift + Return
+    kitty -c $HOME/.config/kitty/$MACHINE.conf --name float
+# old method
+    # urxvtc && \
+    # bspc node focused --state floating
+
+
+# program launcher
+super + @space
+    dmenu_run -i -fn Roboto -p "Launch:"
+
+# Sound & Backlight
+
+# XF86AudioLowerVolume
+# Linux
+#     amixer -c 1 set Master 5%-
+
+# XF86AudioRaiseVolume
+# Linux
+#     amixer -c 1 set Master 5%+
+
+# XF86AudioMute
+#   mutet
+#   its a zsh function, so no good -> should move stuff to sh
+
+
+#alt + x
+#    VOL_MOD='up' $HOME/.volume_control.sh
+#alt + z
+#    VOL_MOD='down' $HOME/.volume_control.sh
+#   VOL_MOD='mute' $HOME/.volume_control.sh
+
+# XF86MonBrightness{Up,Down}
+# OpenBSD
+#     # do nothing
+# Linux
+#     backlight {+,-}5%

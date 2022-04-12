@@ -1,0 +1,107 @@
+#
+# BSPWM HOTKEYS
+#
+
+# quit bspwm normally
+super + shift + b
+    bspc quit
+
+# close & kill windows
+super + {_, shift + } g
+    bspc node -{c,k}
+
+# set the window state
+super + {a,s,d,f}
+    bspc node -t {pseudo_tiled,floating,tiled,fullscreen}
+# alternate between tiled & monocle layout
+super + shift + f
+    bspc desktop -l next
+# should i script a toggle for all modes that defaults back to tiled?
+
+# {focus,move} the node in the given direction
+super + {_,shift + }{j,k,l,ntilde}
+    bspc node -{f,s} {west,south,north,east}
+
+# focus the last {node,desktop}
+super + {_,shift+ }Tab
+    bspc {node,desktop} -f last
+
+# focus or send to the given desktop
+super + {_,shift +}{q,w,e,r,t}
+    bspc {desktop -f,node -d} '^{1-5}'
+
+# send to the given desktop & follow
+super + ctrl + {q,w,e,r,t}
+    bspc node -d '^{1-5}' --follow
+
+# preselect the direction
+super + ctrl + {j,k,l,ntilde}
+    bspc node -p {west,south,north,east}
+
+# cancel the preselection for the focused node
+super + ctrl + space
+    bspc node -p cancel
+
+# change the preselect ratio
+super + ctrl + {u,i,o,p}
+    bspc node -o 0.{2,4,6,8}
+
+# move to previous/next desktop in the current monitor
+super + {m,minus}
+    bspc desktop -f {prev,next}.local
+
+# MIGHT NEED OTHER META-KEY COMBINATION
+# expand a window by moving one of its sides outward
+shift + ctrl + {j,k,l,ntilde}
+    bspc node -z {left -20 0, bottom 0 20, top 0 -20, right 20 0}
+# contract a window by moving one of its sides inward
+super + shift + ctrl + {j,k,l,ntilde}
+    bspc node -z {right -20 0, top 0 20, bottom 0 -20, left 20 0}
+
+# move a floating window
+super + shift + {m,comma,period,minus}
+    bspc node -v {-20 0, 0 20, 0 -20, 20 0}
+
+# DEBUG - do i delete this?
+# pretty useless? cycles through the desktop branch till it selects all windows
+# focus the {next,previous} node in the current desktop
+super + {_,shift + }c
+    bspc node -f {next,prev}.local
+
+# DEBUG NEEDED- some useful, do i delete?
+# swap current node with biggest one
+super + x
+    bspc node -s biggest
+
+#
+# general ones
+#
+
+#
+# states & flags
+#
+
+#
+# focus & swap
+#
+
+#
+# preselect
+#
+
+#
+# Resize tiled/floating nodes
+#
+
+
+
+# set the node flags
+# COULD BE USED FOR SCRATCHPADS/DROPDOWN-WINDOWS VIA STICKY+HIDDEN FLAG
+# NO USE FOR IT FOR NOW
+# super + ctrl + {x,y,z}
+    # bspc node -g {locked,sticky,private}
+
+# focus the node for the given path jump
+super + {shift + v, shift + b, comma, period}
+    bspc node -f @{parent,brother,first,second}
+
