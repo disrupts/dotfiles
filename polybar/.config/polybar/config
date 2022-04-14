@@ -95,9 +95,9 @@ offset-x = 1724 ;1774 ; screen_width - bar_width - 6 [border+margin]
 ; bar/landscape-time does it
 override-redirect=true
 inherit = bar-landscape-laptop
-modules-center = date space pulse
-width = 254
-offset-x = 2298 ; screen_width - bar_width - 6 [border+margin]
+modules-center = date space sndio space battery
+width = 330 ;254
+offset-x = 2232 ; screen_width - bar_width - 6 [border+margin]
 
 
 [module/space]
@@ -127,9 +127,21 @@ ramp-volume-0 = 🔈
 ramp-volume-1 = 🔉
 ramp-volume-2 = 🔊
 
+[module/sndio]
+type = custom/script
+exec = ~/.config/polybar/scripts/sndio.sh
+interval = 30
+label = %output%
+
 [module/xwindow]
 type = internal/xwindow
 format = <label>
 format-padding = 2
 label = %title%
 label-maxlen = 50
+
+[module/battery]
+type = custom/script
+exec = apm -l
+interval = 60
+label = %output%%
