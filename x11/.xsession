@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Sets machine type
-export MACHINE="Desktop"    # values: 'Desktop', 'Laptop'
+export DEVICE="Desktop"     # values: 'Desktop', 'Laptop'
 export OS="`uname -s`"      # values: 'OpenBSD', 'Linux'
 
 # change locale
@@ -17,7 +17,7 @@ xset b off         # stop the bell
 xset r rate 350 35 # autorepeate rate
 
 # Mouse configurations
-case $MACHINE in
+case $DEVICE in
 "Desktop")
     # slow down mouse to make it behave similarly as windows with the same dpi
     mouse_id='pointer:Logitech G305' # other mouse 'Kingsis Peripherals ZOWIE Gaming mouse'
@@ -29,7 +29,7 @@ case $MACHINE in
     # xset m 1 10    # trackpad/trackpoing
     ;;
 *)
-    echo "Configure \$MACHINE to either Desktop or Laptop."
+    echo "Configure \$DEVICE to either Desktop or Laptop."
     ;;
 esac
 
@@ -43,7 +43,7 @@ xidle -timeout 300 -ne -program /usr/bin/slock & # ~/scripts/lock not defined
 #xbanish &
 
 # Screen utilities
-case $MACHINE in
+case $DEVICE in
 "Laptop")
     xdimmer -k & # dims the screen after some time add -n to stop backlight
     #xcalib ~/.icc/x1c3qhd.icc # not this display
@@ -51,13 +51,13 @@ case $MACHINE in
 "Desktop")
     ;;
 *)
-    echo "Configure \$MACHINE to either Desktop or Laptop."
+    echo "Configure \$DEVICE to either Desktop or Laptop."
     ;;
 esac
 
 
 # Monitor setup
-case $MACHINE in
+case $DEVICE in
 "Laptop")
     # autorandr may be used, defaulting to internal monitor
     ;;
@@ -91,7 +91,7 @@ fi
 
 
 # start compositor
-picom --config $HOME/.config/picom/picom.$MACHINE.conf &
+picom --config $HOME/.config/picom/picom.$DEVICE.conf &
 
 # wm bar
 #basic_bar | basic_bar_launcher &

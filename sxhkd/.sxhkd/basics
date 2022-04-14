@@ -4,14 +4,14 @@
 
 # terminal emulator
 super + Return
-    kitty -c $HOME/.config/kitty/$MACHINE.conf
+    kitty -c $HOME/.config/kitty/$DEVICE.conf
     # urxvtc
 
 # floating terminal emulator
 # requires the following bspc rule
 # bspc rule -a kitty:float state=floating
 super + shift + Return
-    kitty -c $HOME/.config/kitty/$MACHINE.conf --name float
+    kitty -c $HOME/.config/kitty/$DEVICE.conf --name float
 # old method
     # urxvtc && \
     # bspc node focused --state floating
