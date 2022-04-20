@@ -56,6 +56,7 @@ case $DEVICE in
     xcalib ~/.icc/x1c3qhd.icc
     ;;
 "Desktop")
+    # xcalib ~/.icc/samsung_C24FG73_user.icm # screen 0 includes all monitors :/
     ;;
 *)
     echo "Configure \$DEVICE to either Desktop or Laptop."
