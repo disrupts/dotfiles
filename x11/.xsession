@@ -37,7 +37,13 @@ esac
 # screen saving/locking
 xset s off      # disable built-in, xidle handles it
 xset dpms 0 0 0 # disable dpm,      slock handles it
-xidle -timeout 300 -ne -program /usr/bin/slock & # ~/scripts/lock not defined
+case $OS in
+"Openbsd") SLOCK=/usr/local/bin/slock ;;
+"Linux")   SLOCK=/usr/bin/slock ;;
+*)         echo "OS not supported." ;;
+esac
+xidle -timeout 300 -ne -program $SLOCK & # ~/scripts/lock not defined
+unset -v SLOCK
 
 # hide cursor when typing, not needed so much with kitty
 #xbanish &
@@ -45,8 +51,9 @@ xidle -timeout 300 -ne -program /usr/bin/slock & # ~/scripts/lock not defined
 # Screen utilities
 case $DEVICE in
 "Laptop")
-    xdimmer -k & # dims the screen after some time add -n to stop backlight
-    #xcalib ~/.icc/x1c3qhd.icc # not this display
+    # xdimmer -ka & # dims the screen after some time
+    xdimmer & # can't find ambient light sensor (-a) & keybaord backlight error (-k)
+    xcalib ~/.icc/x1c3qhd.icc
     ;;
 "Desktop")
     ;;
@@ -84,6 +91,10 @@ $HOME/backgrounds/wallpaper.py
 #CURRENT_OS='OpenBSD' ~/.keyboardrc
 #xmodmap -pke > ~/.Xmodmap #generate file for fictx to call
 
+if [ "$DEVICE" = "Laptop" ]; then
+    setxkbmap -option caps:ctrl_modifier
+fi
+
 # sound, ALSA only stuff
 if [ "$OS" = "Linux" ]; then
     export ALSA_CARD="PCH"
@@ -91,7 +102,7 @@ fi
 
 
 # start compositor
-picom --config $HOME/.config/picom/picom.$DEVICE.conf &
+picom --experimental-backends --config $HOME/.config/picom/picom.$DEVICE.$OS.conf &
 
 # wm bar
 #basic_bar | basic_bar_launcher &

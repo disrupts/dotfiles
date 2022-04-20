@@ -65,8 +65,8 @@ bspc config pointer_modifier mod4 # mod1:alt mod4:super
 
 # application specific rules
 bspc rule -a kitty:float state=floating
-bspc rule -a mpv state=floating
-bspc rule -a feh  state=floating
+# bspc rule -a mpv state=floating
+# bspc rule -a feh  state=floating
 # bspc rule -a Gimp desktop='^8' state=floating follow=on
 # bspc rule -a lutris state=floating
 # bspc rule -a SDL_App state=floating # apps in develepment
