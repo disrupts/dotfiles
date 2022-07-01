@@ -88,6 +88,29 @@ autocmd filetype zsh setlocal list
 autocmd filetype xml setlocal foldmethod=syntax
 autocmd filetype xml setlocal list 
 
+" Fuzzy search                                   {{{1
+set path+=** " tab completion for all file-related tasks
+set wildmenu " display all matching files when we tab complete
+
+" Ctags                                          {{{1
+"" vim commmand that will run in the shell
+" let uname = system('uname -s')
+"if uname == "OpenBSD\n"
+if $OS == "OpenBSD"
+    " universal-ctags is in ports
+    command! CtagsBuild !uctags -R .
+else
+    " universal-ctags is deaulft in arch
+    command! CtagsBuild !ctags -R .  
+endif
+
+" netrw configs                                  {{{1
+let g:netrw_banner=0        " disable annoying banner
+let g:netrw_browse_split=4  " open in prior window
+let g:netrw_altv=1          " open splits to the right
+let g:netrw_liststyle=3     " tree view
+let g:netrw_list_hide=netrw_gitignore#Hide()
+" let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
 
 
 " Visuals                                        {{{1
@@ -112,22 +135,7 @@ colorscheme bubblegum
 "au BufWinEnter * silent loadview
 
 " Strip trailing whitespace                      {{{2
-function! <SID>StripTrailingWhitespaces()
-  " Preparation: save last search, and cursor position.
-  let _s=@/
-  let l = line(".")
-  let c = col(".")
-  " Do the business:
-  %s/\s\+$//e
-  " Clean up: restore previous search history, and cursor position
-  let @/=_s
-  call cursor(l, c)
-endfunction
-
-" THIS SHOULD BE CHANGED TO A VARIABLE, THAT WAY IT IS SET PER FILETYPE LIKE
-" INDENT CONFIG
-nnoremap <silent> <F5> :call <SID>StripTrailingWhitespaces()<CR>
-autocmd BufWritePre *.c,*.h,*.rb,*.py,*.js,*.hs :call <SID>StripTrailingWhitespaces()
+autocmd BufWritePre * :%s/\s\+$//e
 
 " Notes                                          {{{1
 
@@ -198,11 +206,7 @@ endfunction
 
 " Spell Checking                                 {{{2
 nnoremap <leader>s :set spell!<CR>
-" BAD should I remove <silent>
-"nmap <silent> <leader>s :set spell!<CR>
-
-" Change Spell Chacking Language
-nnoremap <leader>sgb :set spelllang=en_gb<CR>
+nnoremap <leader>sen :set spelllang=en_gb<CR>
 nnoremap <leader>ses :set spelllang=es_es<CR>
 nnoremap <leader>sfr :set spelllang=fr<CR>
 
@@ -221,10 +225,10 @@ nnoremap <C-l> <C-w>l
 "nnoremap <C-S-l> <C-w>L
 
 " Simplify movement around soft-wrapped lines    {{{3
-nnoremap ¶ gj
-nnoremap § gk
-nnoremap <M-h> h
-nnoremap <A-l> l
+" nnoremap ¶ gj
+" nnoremap § gk
+" nnoremap <M-h> h
+" nnoremap <A-l> l
 
 " Simplify movement around tabs                  {{{3
 nnoremap <leader>n :tabprevious<CR>
@@ -254,15 +258,6 @@ nnoremap <leader>g :Goyo<CR>
 
 " This is dangerous... trust is an illusion
 
-" Old vim method (tried with nvim, but better to refresh it)
-" will be deleted once the new one tested
-" if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-"   silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
-"    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-"   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-" endif
-
-" New method for nvim
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
   silent execute '!curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
@@ -302,37 +297,24 @@ Plug 'nelstrom/vim-markdown-folding'
 "
 " other
 "Plug 'sjl/gundo.vim'     " unmaintained
-"Plug 'godlygeek/tabular' " unmaintained
 call plug#end()
 
 " Changes for individual plugins                 {{{2
 
-" This worked in after folder - now using easy-align
 " Easy-Align / Tabular mappings                  {{{3
 
-" Easy-Align
 " Start interactive EasyAlign in visual mode (e.g. vipga) 
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip) 
 nmap ga <Plug>(EasyAlign)
 
-" OLD Tabular calls
-" press '<leader> a' and the symbol to map
-" added the following to /after/plugin/Tabular.vim
-"if exists(":Tabularize")
-  "nmap <leader>a= :Tabularize /=<CR>
-  "vmap <leader>a= :Tabularize /=<CR>
-  "nmap <leader>a: :Tabularize /:\zs<CR>
-  "vmap <leader>a: :Tabularize /:\zs<CR>
-  "nmap <leader>a<bar> :Tabularize /\|<CR>
-  "vmap <leader>a<bar> :Tabularize /\|<CR>
-"endif
 
 " vim-correct                                    {{{3
 let g:correction_filetypes = [
   \ 'text', 'markdown', 'gitcommit', 'plaintext', 'tex',
   \ 'latex', 'rst', 'asciidoc', 'textile', 'pandoc', 'md' ]
 
+"
 " Status bar                                     {{{3
 " lua << EOF
 " require('lualine').setup()
