@@ -50,13 +50,13 @@ autocmd FileType MIPS setlocal foldmethod=indent
 autocmd FileType MIPS setlocal ts=4 sts=4 sw=4 expandtab
 autocmd FileType MIPS setlocal list
 
-autocmd filetype c setlocal foldmethod=syntax
-autocmd filetype c setlocal list
+autocmd FileType c setlocal foldmethod=syntax
+autocmd FileType c setlocal list
 
-autocmd Filetype cpp setlocal foldmethod=syntax
-autocmd Filetype cpp setlocal list
+autocmd FileType cpp setlocal foldmethod=syntax
+autocmd FileType cpp setlocal list
 
-autocmd filetype haskell setlocal foldmethod=syntax
+autocmd FileType haskell setlocal foldmethod=syntax
 autocmd FileType haskell setlocal ts=4 sts=4 sw=4 expandtab
 autocmd FileType haskell setlocal list
 
@@ -70,23 +70,23 @@ autocmd FileType python setlocal list
 "autocmd FileType python source ~/.local/share/nvim/site/plugged/...
 "jpythonfold.vim
 "
-autocmd filetype ruby setlocal foldmethod=syntax
-autocmd filetype ruby setlocal list 
+autocmd FileType ruby setlocal foldmethod=syntax
+autocmd FileType ruby setlocal list
 
-autocmd filetype sh setlocal foldmethod=syntax
-autocmd filetype sh setlocal list
+autocmd FileType sh setlocal foldmethod=syntax
+autocmd FileType sh setlocal list
 
-autocmd filetype vhdl setlocal foldmethod=indent
-autocmd filetype vhdl setlocal list
+autocmd FileType vhdl setlocal foldmethod=indent
+autocmd FileType vhdl setlocal list
 
-autocmd filetype vim setlocal foldmethod=syntax
-autocmd filetype vim setlocal list
+autocmd FileType vim setlocal foldmethod=syntax
+autocmd FileType vim setlocal list
 
-autocmd filetype zsh setlocal foldmethod=syntax
-autocmd filetype zsh setlocal list 
+autocmd FileType zsh setlocal foldmethod=syntax
+autocmd FileType zsh setlocal list
 
-autocmd filetype xml setlocal foldmethod=syntax
-autocmd filetype xml setlocal list 
+autocmd FileType xml setlocal foldmethod=syntax
+autocmd FileType xml setlocal list
 
 " Fuzzy search                                   {{{1
 set path+=** " tab completion for all file-related tasks
@@ -101,7 +101,7 @@ if $OS == "OpenBSD"
     command! CtagsBuild !uctags -R .
 else
     " universal-ctags is deaulft in arch
-    command! CtagsBuild !ctags -R .  
+    command! CtagsBuild !ctags -R .
 endif
 
 " netrw configs                                  {{{1
@@ -212,10 +212,10 @@ nnoremap <leader>sfr :set spelllang=fr<CR>
 
 " Movement & navigation mappings                 {{{2
 " Simplify movement around windows               {{{3
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+nnoremap <C-j> <C-w>h
+nnoremap <C-k> <C-w>j
+nnoremap <C-l> <C-w>k
+nnoremap <C-ñ> <C-w>l
 
 " Simplify changing window arrangement           {{{3
 " vim can't distinguish ctrl-letter from ctrl-shift-letter
@@ -276,6 +276,9 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-fugitive'
 
+" lsp
+Plug 'neovim/nvim-lspconfig'
+
 " status lines
 " Plug 'hoob3rt/lualine.nvim' "requires a few
 " Plug 'kyazdani31/nvim-web-devions' "lualine requirement
@@ -303,9 +306,9 @@ call plug#end()
 
 " Easy-Align / Tabular mappings                  {{{3
 
-" Start interactive EasyAlign in visual mode (e.g. vipga) 
+" Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
-" Start interactive EasyAlign for a motion/text object (e.g. gaip) 
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
 
@@ -313,6 +316,22 @@ nmap ga <Plug>(EasyAlign)
 let g:correction_filetypes = [
   \ 'text', 'markdown', 'gitcommit', 'plaintext', 'tex',
   \ 'latex', 'rst', 'asciidoc', 'textile', 'pandoc', 'md' ]
+
+" LSP                                            {{{3
+set omnifunc=v:lua.vim.lsp.omnifunc
+lua require('lspconfig').clangd.setup{}
+"filetypes = { c, cpp, objc, objcpp, ch }}
+lua require('lspconfig').pylsp.setup{}
+
+nmap <silent> hd <cmd>lua vim.lsp.buf.definition()<CR>
+nmap <silent> hD <cmd>lua vim.lsp.buf.declaration()<CR>
+nmap <silent> hi <cmd>lua vim.lsp.buf.hover()<CR>
+nmap <silent> hr <cmd>lua vim.lsp.buf.rename()<CR>
+nmap <silent> h<space> <cmd>lua vim.lsp.buf.formatting()<CR>
+nmap <silent> hf <cmd>lua vim.lsp.buf.references()<CR>
+
+" if neovim overrides omnifunc iwth ccomplete:
+" autcomd FileType c,ch,header,cpp setlocal omnifunc=v,lua,vim,lsp,omnifunc
 
 "
 " Status bar                                     {{{3
@@ -322,4 +341,3 @@ let g:correction_filetypes = [
 
 " Gundo mappings                                 {{{3
 " nnoremap <leader>u :GundoToggle<CR>
-
