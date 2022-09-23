@@ -27,6 +27,11 @@ case $DEVICE in
 "Laptop")
     # change mouse accel & threshold
     # xset m 1 10    # trackpad/trackpoing
+
+    # middle button scroll
+    xinput set-prop "/dev/wsmouse" "WS Pointer Wheel Emulation" 1
+    xinput set-prop "/dev/wsmouse" "WS Pointer Wheel Emulation Button" 2
+    xinput set-prop "/dev/wsmouse" "WS Pointer Wheel Emulation Axes" 6 7 4 5
     ;;
 *)
     echo "Configure \$DEVICE to either Desktop or Laptop."
@@ -83,7 +88,7 @@ esac
 # set wallpaper & change terminal colours
 $HOME/backgrounds/wallpaper.py
 #recolor $wallpath/$wallpaper | toxrdb | xrdb -merge &
-# are those & ok... those processes will end 
+# are those & ok... those processes will end
 
 # Laptop specific things
 # trackpad & touchpad config
